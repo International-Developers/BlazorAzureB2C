@@ -36,7 +36,7 @@ builder.Services.AddScoped<ICookie, Cookie>();
 builder.Services.AddSingleton<StateContainerService>();
 Log.Logger = new LoggerConfiguration()
 .Enrich.FromLogContext()
-.WriteTo.File(@"C:\logs\log.txt")
+.WriteTo.File(@"Logs\log.txt")
 .CreateLogger();
 builder.Host.UseSerilog(((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration)));
 var app = builder.Build();

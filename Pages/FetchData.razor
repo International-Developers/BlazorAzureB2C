@@ -1,10 +1,10 @@
 ﻿@page "/fetchdata"
-
+@inject StateContainerService stateService
 <PageTitle>Weather forecast</PageTitle>
 
 @using BlazorAzureB2C.Data
 @inject WeatherForecastService ForecastService
-
+<h1>Query string : @value</h1>
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
@@ -40,9 +40,10 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
-
+    private int value { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        value = stateService.Value;
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
     }
 }

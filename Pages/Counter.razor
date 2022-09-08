@@ -8,28 +8,44 @@
 <h1>Counter</h1>
 
 <p role="status">Current count: @currentCount</p>
+<p role="status">my session: @Session</p>
+
+<p role="status">my cookies: @Cookies</p>
+
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="SetSession">SetSession</button>
+<button class="btn btn-primary" @onclick="SetCookies">SetCookies</button>
+<button class="btn btn-primary" @onclick="SetState">SetState </button>
 
 @code {
     private int currentCount = 0;
     private string _message { get; set; }
+    private string Session { get; set; }
+    private string Cookies { get; set; }
     private async void IncrementCount()
     {
-        await sessionStorage.SetItemAsync("ID", "20019");
-        await cookie.SetValue("namde","sunishcs",2);
-        _message = await cookie.GetValue("mytest20");
         Log.Information($"Counter button click: {DateTime.Now}");
-        currentCount++;
+
+    }
+    private async void SetSession()
+    {
+        await sessionStorage.SetItemAsync("ID", "20019");
+        Session = await sessionStorage.GetItemAsync<string>("ID");
+    }
+    private async void SetCookies()
+    {
+        await cookie.SetValue("namde", "sunishcs", 2);
+        Cookies = await cookie.GetValue("namde");
     }
     protected override void OnInitialized()
     {
         stateService.OnStateChange += StateHasChanged;
     }
-    void SelectedCategoey(int catid)
+    private void SetState()
     {
-        stateService.SetValue(catid);
-        uriHelper.NavigateTo("/productreceivercomponent");
+        stateService.SetValue(34);
+        uriHelper.NavigateTo("https://localhost:7050/fetchdata");
 
     }
     public void Dispose()
